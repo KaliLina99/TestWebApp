@@ -1,3 +1,21 @@
+// Получаем объект Telegram.WebApp из глобального объекта window
+let tg = window.Telegram.WebApp;
+// Получаем кнопки "buy" и "order" из DOM
+let buy = document.getElementById("buy");
+let order = document.getElementById("order");
+
+// Расширяем интерфейс Telegram
+tg.expand();
+
+// Обработчик события для кнопки "buy"
+buy.addEventListener("click", ()=>{
+    // Скрываем основной контент и отображаем форму при нажатии на кнопку "buy"
+    document.getElementById("main").style.display = "none";
+    document.getElementById("form").style.display = "block";
+    // Устанавливаем значение имени пользователя в поле ввода имени из данных Telegram
+    document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
+});
+
 order.addEventListener("click", () => {
     const errorElement = document.getElementById("error");
     errorElement.innerText = ''; // Очищаем сообщение об ошибке
@@ -43,17 +61,3 @@ order.addEventListener("click", () => {
     // Закрываем Telegram
     tg.close();
 });
-
-// Функция для проверки правильного формата электронной почты
-function isValidEmail(email) {
-    // Регулярное выражение для проверки формата email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Функция для проверки правильного формата номера телефона
-function isValidPhone(phone) {
-    // Регулярное выражение для проверки формата номера телефона
-    const phoneRegex = /^\+?(\d{1,3})?[-. ]?(\d{3})[-. ]?(\d{3})[-. ]?(\d{2})[-. ]?(\d{2})$/;
-    return phoneRegex.test(phone);
-}
