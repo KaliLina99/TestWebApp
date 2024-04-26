@@ -26,6 +26,12 @@ order.addEventListener("click", () => {
     let email = document.getElementById("user_email").value.trim();
     let phone = document.getElementById("user_phone").value.trim();
 
+    // Проверка на пустые значения всех трех полей
+    if (name === "" && email === "" && phone === "") {
+        showError("Введите данные в хотя бы одно поле");
+        return;
+    }
+
     // Проверка имени на пустое значение или некорректные символы
     if (!isValidName(name)) {
         showError("Введите корректное имя");
@@ -52,6 +58,7 @@ order.addEventListener("click", () => {
     }
     tg.sendData(JSON.stringify(data));
 });
+
 
 // Функция для проверки правильного формата имени
 function isValidName(name) {
