@@ -18,7 +18,9 @@ buy.addEventListener("click", () => {
 });
 
 
-order.addEventListener("click", async () => {
+order.addEventListener("click", async (event) => {
+    event.preventDefault(); // Предотвращаем стандартное действие кнопки (перезагрузку страницы)
+
     errorElement.innerText = ''; // Очищаем сообщение об ошибке
 
     // Получаем значения полей
