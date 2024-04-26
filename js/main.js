@@ -7,6 +7,14 @@ let order = document.getElementById("order");
 // Расширяем интерфейс Telegram
 tg.expand();
 
+// Функция валидации email
+function isValidEmail(email) {
+    // Регулярное выражение для проверки корректности адреса электронной почты
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Проверяем, соответствует ли переданный email регулярному выражению
+    return emailRegex.test(email);
+}
+
 // Обработчик события для кнопки "buy"
 buy.addEventListener("click", ()=>{
     // Скрываем основной контент и отображаем форму при нажатии на кнопку "buy"
@@ -16,6 +24,7 @@ buy.addEventListener("click", ()=>{
     document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
 });
 
+// Обработчик события для кнопки "order"
 order.addEventListener("click", () => {
     const errorElement = document.getElementById("error");
     errorElement.innerText = ''; // Очищаем сообщение об ошибке
@@ -57,7 +66,4 @@ order.addEventListener("click", () => {
         phone: phone
     };
     tg.sendData(JSON.stringify(data));
-
-    // Закрываем Telegram
-    tg.close();
 });
