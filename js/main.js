@@ -63,6 +63,9 @@ order.addEventListener("click", () => {
         phone: phone
     }
     tg.sendData(JSON.stringify(data));
+
+    // Закрываем Telegram WebApp только после успешной отправки данных без ошибок
+    tg.close();
 });
 
 
