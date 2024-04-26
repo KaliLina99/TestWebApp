@@ -17,7 +17,8 @@ buy.addEventListener("click", () => {
     document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
 });
 
-order.addEventListener("click", () => {
+
+order.addEventListener("click", async () => {
     errorElement.innerText = ''; // Очищаем сообщение об ошибке
 
     // Получаем значения полей
@@ -62,18 +63,18 @@ order.addEventListener("click", () => {
         email: email,
         phone: phone
     }
-    tg.sendData(JSON.stringify(data));
 
-  
+    try {
+        // Отправляем данные на сервер Telegram WebApp
+        await tg.sendData(JSON.stringify(data));
+        // Если данные успешно отправлены, закрываем Telegram WebApp
+        tg.close();
+    } catch (error) {
+        // Если произошла ошибка при отправке данных, показываем сообщение об ошибке
+        showError("Ошибка при отправке данных. Пожалуйста, попробуйте еще раз.");
+    }
 });
 
-
-
-// Функция для проверки правильного формата имени
-function isValidName(name) {
-    // Простая проверка наличия символов в имени
-    return name.length > 0;
-}
 
 // Функция для отображения ошибки
 function showError(message) {
@@ -92,4 +93,10 @@ function isValidPhone(phone) {
     // Регулярное выражение для проверки формата номера телефона
     const phoneRegex = /^\+?(\d{1,3})?[-. ]?(\d{3})[-. ]?(\d{3})[-. ]?(\d{2})[-. ]?(\d{2})$/;
     return phoneRegex.test(phone);
+}
+
+// Функция для проверки правильного формата имени
+function isValidName(name) {
+    // Простая проверка наличия символов в имени
+    return name.length > 0;
 }
