@@ -17,7 +17,6 @@ buy.addEventListener("click", () => {
     document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
 });
 
-// Обработчик события для кнопки "order"
 order.addEventListener("click", () => {
     errorElement.innerText = ''; // Очищаем сообщение об ошибке
 
@@ -26,27 +25,34 @@ order.addEventListener("click", () => {
     let email = document.getElementById("user_email").value.trim();
     let phone = document.getElementById("user_phone").value.trim();
 
+    let hasError = false; // Переменная для отслеживания наличия ошибок
+
     // Проверка на пустые значения всех трех полей
     if (name === "" && email === "" && phone === "") {
         showError("Введите данные в хотя бы одно поле");
-        return;
+        hasError = true;
     }
 
     // Проверка имени на пустое значение или некорректные символы
     if (!isValidName(name)) {
         showError("Введите корректное имя");
-        return;
+        hasError = true;
     }
 
     // Проверка электронной почты
     if (!isValidEmail(email)) {
         showError("Введите корректный адрес электронной почты");
-        return;
+        hasError = true;
     }
 
     // Проверка номера телефона
     if (!isValidPhone(phone)) {
         showError("Введите корректный номер телефона");
+        hasError = true;
+    }
+
+    // Если есть ошибка, не отправляем данные
+    if (hasError) {
         return;
     }
 
@@ -58,6 +64,7 @@ order.addEventListener("click", () => {
     }
     tg.sendData(JSON.stringify(data));
 });
+
 
 
 // Функция для проверки правильного формата имени
