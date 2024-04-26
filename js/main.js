@@ -25,24 +25,21 @@ order.addEventListener("click", () => {
     let phone = document.getElementById("user_phone").value;
  
     // Проверка формы при нажатии на кнопку "order"
-    // Проверка имени на пустое значение
-    if (name.trim() === "") {
-        alert("Введите ваше имя");
+    if (name.length < 5) {
+        document.getElementById("error").innerText = 'Ошибка в Имени';
         return; // Прерываем выполнение функции
     }
 
     // Проверка электронной почты на правильный формат
-    if (!isValidEmail(email)) {
-        alert("Введите корректный адрес электронной почты");
+    if (email.length < 5) {
+        document.getElementById("error").innerText = 'Ошибка в Email';
         return; // Прерываем выполнение функции
     }
-
     // Проверка номера телефона на правильный формат
-    if (!isValidPhone(phone)) {
-        alert("Введите корректный номер телефона");
+    if (phone.length < 5) {
+        document.getElementById("error").innerText = 'Ошибка в номере телефона';
         return; // Прерываем выполнение функции
     }
-
     // Если все проверки пройдены, можно выполнять дальнейшие действия, например, отправку данных на сервер
     let data = {
         name: name,
@@ -50,18 +47,8 @@ order.addEventListener("click", () => {
         phone: phone
     }
     tg.sendData(JSON.stringify(data));
+
+    tg.close();
 });
 
-// Функция для проверки правильного формата электронной почты
-function isValidEmail(email) {
-    // Регулярное выражение для проверки формата email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
 
-// Функция для проверки правильного формата номера телефона
-function isValidPhone(phone) {
-    // Регулярное выражение для проверки формата номера телефона
-    const phoneRegex = /^\+?(\d{1,3})?[-. ]?(\d{3})[-. ]?(\d{3})[-. ]?(\d{2})[-. ]?(\d{2})$/;
-    return phoneRegex.test(phone);
-}
